@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">GuideCaneApp</string>
+    <string name="real_time_location">Real-Time Location</string>
+    <string name="geofencing_status">Geofencing Status</string>
+    <string name="historical_data">Historical Location Data</string>
+    <string name="battery_status">Battery Status</string>
+    <string name="emergency_alert">Emergency Alert! Immediate Attention Required</string>
+    <string name="no_emergency">No Emergency</string>
+    <string name="view_details">View Details</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="details_title">Details of Notifications</string>
+    <string name="location_history">Real-Time Location History</string>
+    <string name="geofencing_history">Geofencing History</string>
+    <string name="battery_history">Battery Status History</string>
+    <string name="emergency_alert_history">Emergency Alerts History</string>
+
+</resources>
+
