@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.ombati.guidecaneapp.pages.HomePage
+import com.ombati.guidecaneapp.presentation.home.HomePage
 import com.ombati.guidecaneapp.pages.LoginPage
 import com.ombati.guidecaneapp.pages.SignupPage
 

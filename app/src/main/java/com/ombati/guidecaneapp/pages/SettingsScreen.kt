@@ -31,18 +31,17 @@ fun SettingsScreen(
     ) {
         Text(
             text = "Settings",
-            style = MaterialTheme.typography.titleLarge,  // Use titleLarge for a prominent title
+            style = MaterialTheme.typography.titleLarge,
             modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        // Sign out button
         TextButton(onClick = {
             authViewModel.signout()
         }) {
             Text(
                 text = "Sign Out",
                 style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.error // To highlight the sign out button
+                color = MaterialTheme.colorScheme.error
             )
         }
     }

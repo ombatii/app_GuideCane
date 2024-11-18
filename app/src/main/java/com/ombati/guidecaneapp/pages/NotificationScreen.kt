@@ -1,17 +1,27 @@
 package com.ombati.guidecaneapp.pages
 
-import android.os.Bundle
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.compose.foundation.text.BasicText
-import androidx.compose.ui.res.stringResource
 import com.ombati.guidecaneapp.R
 
 @Composable
@@ -38,7 +48,7 @@ fun NotificationScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // Real-Time Location Tracking
+
         Text(text = stringResource(id = R.string.real_time_location))
         Text(
             text = realTimeLocation,
@@ -46,7 +56,7 @@ fun NotificationScreen(navController: NavController) {
             modifier = Modifier.padding(vertical = 8.dp)
         )
 
-        // Geofencing Status
+
         Text(text = stringResource(id = R.string.geofencing_status))
         Text(
             text = geofencingStatus,
@@ -54,7 +64,7 @@ fun NotificationScreen(navController: NavController) {
             modifier = Modifier.padding(vertical = 8.dp)
         )
 
-        // Historical Location Data
+
         Text(text = stringResource(id = R.string.historical_data))
         Text(
             text = historicalData,
@@ -62,7 +72,6 @@ fun NotificationScreen(navController: NavController) {
             modifier = Modifier.padding(vertical = 8.dp)
         )
 
-        // Battery Status Monitoring
         Text(text = stringResource(id = R.string.battery_status))
         Text(
             text = batteryStatus,
@@ -70,7 +79,6 @@ fun NotificationScreen(navController: NavController) {
             modifier = Modifier.padding(vertical = 8.dp)
         )
 
-        // Emergency Alerts
         if (emergencyAlert) {
             Text(
                 text = stringResource(id = R.string.emergency_alert),
@@ -86,15 +94,14 @@ fun NotificationScreen(navController: NavController) {
             )
         }
 
-        Spacer(modifier = Modifier.weight(1f)) // Push buttons to the bottom
+        Spacer(modifier = Modifier.weight(1f))
 
-        // Action Buttons (if needed)
+
         Row(
             horizontalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(onClick = {
-                // Navigate to ViewDetailsScreen
                 navController.navigate("view_details")
             }) {
                 Text(stringResource(id = R.string.view_details))
