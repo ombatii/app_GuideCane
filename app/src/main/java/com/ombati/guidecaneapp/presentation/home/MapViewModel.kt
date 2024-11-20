@@ -62,18 +62,25 @@ class MapViewModel @Inject constructor(
                             val users = result.data.filter { user ->
                                 user.latitude != 0.0 && user.longitude != 0.0
                             }.map { user ->
-                                val isOutOfGeofence = calculateDistance(
-                                    user.latitude,
-                                    user.longitude,
-                                    user.geoFencingLatitude,
-                                    user.geoFencingLongitude
-                                ) > 50
+                                // Only calculate distance if geoFencing coordinates are valid (not equal to 0.0)
+                                val isOutOfGeofence = if (user.geoFencingLatitude != 0.0 && user.geoFencingLongitude != 0.0) {
+                                    calculateDistance(
+                                        user.latitude,
+                                        user.longitude,
+                                        user.geoFencingLatitude,
+                                        user.geoFencingLongitude
+                                    ) > 50
+                                } else {
+                                    false  // Default to false if geoFencing coordinates are invalid (0.0)
+                                }
+
                                 GuideCaneUserWithUiState(
                                     guideCaneUser = user,
                                     isOutOfGeofence = isOutOfGeofence,
                                     iconColor = if (isOutOfGeofence || user.emergencyStatus == "Alert") Color.Red else Color.Blue
                                 )
                             }
+
                             _state.update {
                                 it.copy(
                                     guideCaneUsers = users,

@@ -8,8 +8,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import com.ombati.guidecaneapp.presentation.notification.NotificationWorker
 import com.ombati.guidecaneapp.ui.theme.GuideCaneAppTheme
 import com.ombati.guidecaneapp.viewmodel.AuthViewModel
 import com.ombati.guidecaneapp.viewmodel.MyAppNavigation
@@ -23,6 +23,7 @@ class MainActivity : ComponentActivity() {
 
 
         val authViewModel: AuthViewModel by viewModels()
+        NotificationWorker.startSyncing(this)
 
         setContent {
             GuideCaneAppTheme {
