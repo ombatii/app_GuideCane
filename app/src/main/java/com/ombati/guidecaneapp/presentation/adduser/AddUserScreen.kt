@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -74,7 +75,6 @@ fun AddUserScreen(
                 .padding(padding)
                 .padding(16.dp)
         ) {
-            // Title
             Text(
                 text = "Add New Guide Cane User",
                 style = MaterialTheme.typography.titleLarge.copy(
@@ -114,7 +114,10 @@ fun AddUserScreen(
             ) {
                 Button(
                     onClick = { viewModel.sendEvent(AddUserScreenUiEvent.AddUserScreenUi) },
-                    enabled = !uiState.isLoading
+                    enabled = !uiState.isLoading,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                    )
                 ) {
                     Text("Add")
                 }
@@ -123,7 +126,10 @@ fun AddUserScreen(
                     onClick = {
                         viewModel.sendEvent(AddUserScreenUiEvent.Cancel)
                         navController.popBackStack()
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    )
                 ) {
                     Text("Cancel")
                 }

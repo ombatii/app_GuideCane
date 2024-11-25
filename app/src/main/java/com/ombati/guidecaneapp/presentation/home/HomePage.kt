@@ -17,9 +17,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.ombati.guidecaneapp.nav.AppBottomNavigation
 import com.ombati.guidecaneapp.nav.NavItem
-import com.ombati.guidecaneapp.pages.NotificationScreen
 import com.ombati.guidecaneapp.pages.SettingsScreen
 import com.ombati.guidecaneapp.presentation.adduser.AddUserScreen
+import com.ombati.guidecaneapp.presentation.notification.NotificationWorker
 import com.ombati.guidecaneapp.presentation.profile.ProfileScreen
 import com.ombati.guidecaneapp.presentation.updateguidecaneuser.UpdateUserScreen
 import com.ombati.guidecaneapp.presentation.viewhistory.ViewHistoryScreen
@@ -36,7 +36,12 @@ fun HomePage(
 
     LaunchedEffect(authState.value) {
         when (authState.value) {
-            is AuthState.Unauthenticated -> navController.navigate("login")
+            is AuthState.Unauthenticated -> {
+                navController.navigate("login")
+            }
+            is AuthState.Authenticated -> {
+                NotificationWorker.startSyncing(context = navController.context)
+            }
             else -> Unit
         }
     }
@@ -63,9 +68,6 @@ fun HomePage(
                     }
                     composable(NavItem.Profile.route) {
                         ProfileScreen(navController = navController)
-                    }
-                    composable(NavItem.Notification.route) {
-                        NotificationScreen(navController = navController)
                     }
                     composable(NavItem.Settings.route) {
                         SettingsScreen(navController = navController, authViewModel = authViewModel)

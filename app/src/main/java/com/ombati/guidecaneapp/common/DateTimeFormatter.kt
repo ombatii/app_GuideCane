@@ -12,9 +12,8 @@ fun getCurrentTimeAsString(): String {
 }
 
 fun convertDateFormat(date: Date): String {
-    // Set the desired format and time zone (EAT)
     val newDateFormat = SimpleDateFormat("EEEE MMMM d, yyyy, h:mma", Locale.getDefault())
-    newDateFormat.timeZone = TimeZone.getTimeZone("Africa/Nairobi") // Set to EAT (UTC+3)
+    newDateFormat.timeZone = TimeZone.getTimeZone("Africa/Nairobi")
     return newDateFormat.format(date)
 }
 

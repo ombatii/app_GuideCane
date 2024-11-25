@@ -11,7 +11,6 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.ombati.guidecaneapp.common.Result
 import com.ombati.guidecaneapp.data.repositories.storage.GuideCaneRepository
 import com.ombati.guidecaneapp.data.repositories.storage.GuideCaneRepositoryImpl
 import com.ombati.guidecaneapp.presentation.home.calculateDistance
@@ -26,9 +25,12 @@ class NotificationWorker (
 ) : CoroutineWorker(appContext, params) {
     private val notificationHelper: NotificationHelper = NotificationHelper(appContext)
     private val guideCaneRepository: GuideCaneRepository = GuideCaneRepositoryImpl(firebaseDB = FirebaseFirestore.getInstance(),Dispatchers.IO)
+    val appUserId = FirebaseAuth.getInstance().currentUser?.uid
     override suspend fun doWork(): Result {
         return try {
-            checkBatteryStatus()
+            checkBatteryStatus(){
+
+            }
             checkEmergencyStatus()
             checkLocationProximity()
 
@@ -39,16 +41,11 @@ class NotificationWorker (
         }
     }
 
-    private fun checkBatteryStatus() {
-        val appUserId = FirebaseAuth.getInstance().currentUser?.uid
-        if (appUserId == null) {
-            return
-        }
-
-        appUserId?.let {
-            guideCaneRepository.fetchGuideCaneUsersForCurrentUser(appUserId) { result ->
-                when (result) {
+    private fun checkBatteryStatus(onSuccess: () -> Unit){
+            guideCaneRepository.fetchGuideCaneUsersForCurrentUser(appUserId!!) { result ->
+               when (result) {
                     is com.ombati.guidecaneapp.common.Result.Failure -> {
+
                     }
                     is com.ombati.guidecaneapp.common.Result.Success -> {
                         val users = result.data
@@ -75,18 +72,14 @@ class NotificationWorker (
                         } else {
                             notificationHelper.cancelNotification()
                         }
+                        Result.success()
                     }
                 }
             }
-        }
+
     }
 
     private fun checkEmergencyStatus() {
-        val appUserId = FirebaseAuth.getInstance().currentUser?.uid
-        if (appUserId == null) {
-            return
-        }
-
         appUserId?.let {
             guideCaneRepository.fetchGuideCaneUsersForCurrentUser(appUserId) { result ->
                 when (result) {
@@ -122,12 +115,6 @@ class NotificationWorker (
 
     private fun checkLocationProximity() {
         Log.d("NotificationWorker", "DoWork called")
-        val appUserId = FirebaseAuth.getInstance().currentUser?.uid
-        if (appUserId == null) {
-            Log.d("NotificationWorker", "User is not authenticated.")
-            return
-        }
-
         appUserId?.let {
             guideCaneRepository.fetchGuideCaneUsersForCurrentUser(appUserId) { result ->
                 when (result) {
@@ -204,7 +191,7 @@ class NotificationWorker (
 
             WorkManager.getInstance(context).enqueueUniquePeriodicWork(
                 WORK_NAME,
-                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,//.Keep
+                ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE,//KEEP
                 startSyncingRequest,
             )
         }

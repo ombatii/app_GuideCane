@@ -3,20 +3,27 @@ package com.ombati.guidecaneapp.presentation.viewhistory
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.PinDrop
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -67,7 +74,6 @@ fun ViewHistoryScreen(navController: NavController, smartCaneId: String) {
         }.collect()
     }
 
-
     LaunchedEffect(smartCaneId) {
         if (smartCaneId.isNotEmpty()) {
             viewModel.sendEvent(ViewHistoryScreenUiEvent.GetLocationHistory(smartCaneId))
@@ -85,14 +91,9 @@ fun ViewHistoryScreen(navController: NavController, smartCaneId: String) {
                     }
                 }
             )
-        },
-        floatingActionButton = {
-            FloatingActionButton(onClick = { navController.navigate("profile") }) {
-                Text("Back")
-            }
         }
-    ) {
-        Box(modifier = Modifier.padding(it)) {
+    ) { paddingValues ->
+        Box(modifier = Modifier.padding(paddingValues)) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -131,22 +132,72 @@ fun ViewHistoryScreen(navController: NavController, smartCaneId: String) {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun LocationItem(location: History) {
-    val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
 
-    Log.d("LocationItem", "Displaying location: $location")
+    val dateFormatter = DateTimeFormatter.ofPattern("EEEE MMMM dd, yyyy")
 
-    Column(modifier = Modifier.padding(8.dp)) {
-        Text(
-            text = "Date: ${location.date}",
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Text(
-            text = "Latitude: ${location.latitude}",
-            style = MaterialTheme.typography.bodyMedium
-        )
-        Text(
-            text = "Longitude: ${location.longitude}",
-            style = MaterialTheme.typography.bodyMedium
-        )
+
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp),
+        shape = RoundedCornerShape(16.dp),
+        elevation = CardDefaults.cardElevation(4.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.PinDrop,
+                    contentDescription = "Location Icon",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Column {
+                    Text(
+                        text = "Location",
+                        style = MaterialTheme.typography.labelLarge,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                    Text(
+                        text = "${location.latitude}, ${location.longitude}",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(
+                    imageVector = Icons.Default.DateRange,
+                    contentDescription = "Date Icon",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Column {
+                    Text(
+                        text = "Date",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                    Text(
+                        text = "${location.date}",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.tertiary
+                    )
+                }
+            }
+
+        }
     }
 }

@@ -119,7 +119,6 @@ class AddUserViewModel @Inject constructor(private val guideCaneRepository: Guid
 
 
     private fun cancelAddUser() {
-        // Handle cancel action (reset fields, navigate back, etc.)
-        setState(AddUserScreenUiState()) // Resets the state
+        setState(AddUserScreenUiState())
     }
 }

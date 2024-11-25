@@ -108,20 +108,18 @@ class GuideCaneRepositoryImpl @Inject constructor(
 
     override suspend fun fetchGuideCaneUser(smartCaneId: String): Result<GuideCaneUser> {
         return try {
-            // Fetch document for the given smartCaneId
             val documentSnapshot = firebaseDB.collection("GuideCane")
                 .document(smartCaneId)
                 .get()
                 .await()
 
             if (documentSnapshot.exists()) {
-                // Mapping the values from the Firestore document to individual fields
                 val emergencyStatus = when (val status = documentSnapshot.getString("emergency_status")) {
                     null, "string" -> EmergencyStatus.Normal.name
                     else -> status
                 }
 
-                // Mapping fields individually
+
                 val guideCaneUser = GuideCaneUser(
                     id = documentSnapshot.id,
                     batteryLevel = documentSnapshot.getString("battery_level") ?: "",
@@ -149,7 +147,7 @@ class GuideCaneRepositoryImpl @Inject constructor(
     override suspend fun updateGuideCaneUser(smartCaneId: String, updates: Map<String, Any>): Result<Unit> {
         return try {
             withContext(ioDispatcher) {
-                withTimeout(10000L) { // If the operation exceeds this, it throws a TimeoutCancellationException
+                withTimeout(10000L) {
                     firebaseDB.collection("GuideCane")
                         .document(smartCaneId)
                         .update(updates)
@@ -216,7 +214,6 @@ class GuideCaneRepositoryImpl @Inject constructor(
         }
     }
 
-    // GuideCaneRepositoryImpl.kt
     override suspend fun fetchUserHistory(smartCaneId: String): Result<List<History>> {
         return try {
             withContext(ioDispatcher) {
@@ -237,14 +234,14 @@ class GuideCaneRepositoryImpl @Inject constructor(
                         val longitude = document.getDouble("longitude") ?: 0.0
                         val timestamp = document.getTimestamp("date") // Retrieve as Timestamp
 
-                        // Convert the Timestamp to a formatted date string in EAT
+
                         val formattedDate = if (timestamp != null) {
                             convertDateFormat(timestamp.toDate())
                         } else {
                             "Invalid date format"
                         }
 
-                        // Log the mapped History object
+
                         val history = History(
                             date = formattedDate,
                             documentId = documentId,

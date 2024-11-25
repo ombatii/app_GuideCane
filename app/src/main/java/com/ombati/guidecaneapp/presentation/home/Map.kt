@@ -45,8 +45,9 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import com.google.maps.android.compose.rememberMarkerState
 import com.ombati.guidecaneapp.R
 import com.ombati.guidecaneapp.data.model.GuideCaneUser
+import com.ombati.guidecaneapp.presentation.components.NoUsersFound
 import com.ombati.guidecaneapp.presentation.profile.LoadingIndicator
-import com.ombati.guidecaneapp.presentation.profile.NoUsersFound
+
 
 @Composable
 fun Map(

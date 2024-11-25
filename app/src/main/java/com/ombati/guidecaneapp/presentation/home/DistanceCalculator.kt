@@ -6,15 +6,7 @@ import kotlin.math.pow
 import kotlin.math.sin
 import kotlin.math.sqrt
 
-/**
- * Calculates the distance between two geographical points on the Earth's surface using the Haversine formula.
- *
- * @param lat1 Latitude of the first point in degrees.
- * @param lon1 Longitude of the first point in degrees.
- * @param lat2 Latitude of the geofencing point in degrees.
- * @param lon2 Longitude of the geofencing point in degrees.
- * @return The distance in meters.
- */
+
 fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Float {
     val earthRadius = 6371000.0
 
