@@ -119,7 +119,8 @@ fun AddUserScreen(
                         containerColor = MaterialTheme.colorScheme.primaryContainer
                     )
                 ) {
-                    Text("Add")
+                    Text("Add",
+                        color = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
 
                 Button(
@@ -128,10 +129,11 @@ fun AddUserScreen(
                         navController.popBackStack()
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                        containerColor = MaterialTheme.colorScheme.inversePrimary
                     )
                 ) {
-                    Text("Cancel")
+                    Text("Cancel",
+                        color = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
             }
         }

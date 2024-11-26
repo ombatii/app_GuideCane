@@ -31,7 +31,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -51,7 +50,7 @@ fun ProfileCard(
     val emergencyColor = if (guideCaneUser.emergencyStatus == "Alert") MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary
     val batteryLevel = guideCaneUser.batteryLevel?.toIntOrNull() ?: 50
 
-    val batteryColor = if (batteryLevel < 16) MaterialTheme.colorScheme.error else Color.Green
+    val batteryColor = if (batteryLevel < 16) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.tertiary
     val batteryIcon = when {
         batteryLevel > 75 -> Icons.Default.BatteryFull
         batteryLevel > 50 -> Icons.Default.Battery3Bar
